@@ -1,18 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Olá Mundo!</title>
-  </head>
-  <body>
-    <h1>Olá Mundo!</h1>
-    Nos estamos usando node <script>document.write(process.versions.node)</script>,
-    Chrome <script>document.write(process.versions.chrome)</script>,
-    e Electron <script>document.write(process.versions.electron)</script>.
-  </body>
-</html> -->
-
-
 <!doctype html>
 <html>
 <head>
@@ -147,17 +132,41 @@
     network = new vis.Network(container, data, options);
 
     //Events
-
     network.on('select', function(params){
         console.log(params)
-        network.focus(params.nodes[0],{
-            scale: 1,
-            animation: true,
-        })
-        // network.manipulation()
-        // var test = document.getElementById('node-id');
-        params.nodes[0].color = 'red'
+        var num = getRandomInt(1,30)
+        bfs(num)
     });
+
+    var list = [5,1,23,14,0]
+    var count = 0
+    network.on('animationFinished', function(){
+        console.log('finalizou')
+        bfs(list[count])
+        count++
+    })
+
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    function bfs(value){        
+        var options = {
+            scale: 1,
+            // animation: true
+            animation: {
+                duration: 2000,
+                // easingFunction: linear
+            }
+        }
+        network.focus(value, options)
+
+        return true;
+    }
 </script>
+
+<input type="button" onclick="focusRandom()" value="CLICK ME">
 </body>
 </html>
