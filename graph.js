@@ -147,19 +147,44 @@ var options = {
 };
 network = new vis.Network(container, data, options);
 
+//Global variables for BFS
+var visited = []
+var neighbors = []
+var color = 0
+
 //Events
 network.on('select', function (params) {
+    color = (color == 0 ? 1 :  0)
+    visited = []
+    neighbors = []
+    visited.push(params.nodes[0])
     console.log(params)
-    var num = getRandomInt(1, 30)
-    bfs(num)
+    console.log('visited = ' + visited)
+    neighbors = network.getConnectedNodes(params.nodes[0])
+    console.log('neighbors =  ' + neighbors)
+
+    bfs(visited[0])
 });
 
-var list = [5, 1, 23, 14, 0]
-var count = 0
 network.on('animationFinished', function () {
     console.log('finalizou')
-    bfs(list[count])
-    count++
+    console.log('initial neighbors = ' + neighbors)
+    if(neighbors[0] >= 0){
+        var next = neighbors[0]
+        var nextNeighbors = []
+        nextNeighbors = network.getConnectedNodes(next)
+        console.log('next neighbors = ' + nextNeighbors)
+
+        visited.push(next)
+        nextNeighbors.forEach(element => {
+            if (!visited.includes(element)){
+                neighbors.push(element)
+            }
+        });
+        neighbors.shift()
+        console.log('final neighbors = ' + neighbors)
+        bfs(next)
+    }
 })
 
 function getRandomInt(min, max) {
@@ -169,21 +194,18 @@ function getRandomInt(min, max) {
 }
 
 function bfs(value) {
+    if (color == 1){
+        network.clustering.updateClusteredNode(value, { color: { background: 'red', highlight: { background: 'red' } } })
+    } else {
+        network.clustering.updateClusteredNode(value, { color: { background: '#ffffff', highlight: { background: '#ffffff' } } })
+    }
     var options = {
         scale: 1,
         // animation: true
         animation: {
-            duration: 2000,
+            duration: 1800,
             // easingFunction: linear
         }
     }
     network.focus(value, options)
-
-    return true;
 }
-
-network.on("select", function (params) {
-    console.log(params);
-    console.log(params.nodes[0])
-    network.clustering.updateClusteredNode(params.nodes, { color: { background: 'red', highlight: { background: 'red' } } })
-});
