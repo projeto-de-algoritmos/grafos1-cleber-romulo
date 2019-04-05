@@ -143,7 +143,7 @@ function bfs(value) {
         scale: 1,
         // animation: true
         animation: {
-            duration: 800,
+            duration: 1000,
             // easingFunction: linear
         }
     }
