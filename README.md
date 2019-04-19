@@ -7,7 +7,7 @@ O projeto desenvolvido aplica busca em largura, para, de forma visual, simular o
 | Nomde | github |
 |:-----:|:------:|
 | Cleber Júnior | [@cjjcastro](https://github.com/cjjcastro/) |
-| Rômulo Vinícius de Souza | [@cjjcastro](https://github.com/romulosouza/) |
+| Rômulo Vinícius de Souza | [@romulosouza](https://github.com/romulosouza/) |
 
 
 ## Instalação e Execução
